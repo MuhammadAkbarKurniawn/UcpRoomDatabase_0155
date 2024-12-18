@@ -1,4 +1,4 @@
-package com.example.apllicationdata.repository
+package com.example.ucproomdatabase.repository
 
 import com.example.ucproomdatabase.data.dao.DosenDao
 import com.example.ucproomdatabase.data.entity.Dosen
