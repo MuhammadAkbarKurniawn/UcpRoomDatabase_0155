@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.apllicationdata"
+    namespace = "com.example.ucproomdatabase"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.apllicationdata"
+        applicationId = "com.example.ucproomdatabase"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -42,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging{
         resources{
