@@ -1,5 +1,6 @@
 package com.example.ucproomdatabase.data.dao
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
@@ -7,6 +8,7 @@ import androidx.room.Update
 import com.example.ucproomdatabase.data.entity.MataKuliah
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface MatkulDao {
     @Insert
     suspend fun insertMataKuliah(mataKuliah: MataKuliah)
