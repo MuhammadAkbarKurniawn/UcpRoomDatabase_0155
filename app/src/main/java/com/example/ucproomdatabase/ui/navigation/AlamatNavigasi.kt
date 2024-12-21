@@ -15,22 +15,16 @@ interface AlamatNavigasi {
         override val route = "homemk"
     }
 
-    object DestinasiDetailDsn : AlamatNavigasi {
-        override val route = "detaildsn"
-        const val NIM = "nim"
-        val routesWithArg = "$route/{$NIM}"
-    }
-
     object DestinasiDetailMK : AlamatNavigasi {
         override val route = "detailmk"
-        const val NIM = "nim"
-        val routesWithArg = "$route/{$NIM}"
+        const val KODE = "kode"
+        val routesWithArg = "$route/{$KODE}"
     }
 
     object DestinasiUpdateMK : AlamatNavigasi {
         override val route = "updatemk"
-        const val NIM = "nim"
-        val routesWithArg = "$route/{$NIM}"
+        const val KODE = "kode"
+        val routesWithArg = "$route/{$KODE}"
     }
 
 }
