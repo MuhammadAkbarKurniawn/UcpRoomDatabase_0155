@@ -115,6 +115,9 @@ fun FormMatkul(
     dosenList: List<Dosen>,
 ) {
     val jenisMataKuliah = listOf("Wajib", "Peminatan")
+    val semester = listOf("Ganjil", "Genap")
+
+
     var chosenDropdown by remember { mutableStateOf(matkulEvent.dosenPengampu) }
     var expanded by remember { mutableStateOf(false) }
 
@@ -127,7 +130,8 @@ fun FormMatkul(
             onValueChange = { onValueChange(matkulEvent.copy(kode = it)) },
             label = { Text("Kode") },
             isError = errorState.kode != null,
-            placeholder = { Text("Masukkan Kode") }
+            placeholder = { Text("Masukkan Kode") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
         Text(text = errorState.kode ?: "", color = Color.Red)
 
@@ -138,7 +142,7 @@ fun FormMatkul(
             label = { Text("Nama") },
             isError = errorState.nama != null,
             placeholder = { Text("Masukkan Nama") },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
         )
         Text(text = errorState.nama ?: "", color = Color.Red)
 
@@ -148,18 +152,28 @@ fun FormMatkul(
             onValueChange = { onValueChange(matkulEvent.copy(SKS = it)) },
             label = { Text("SKS") },
             isError = errorState.SKS != null,
-            placeholder = { Text("Masukkan SKS") }
+            placeholder = { Text("Masukkan SKS") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
         Text(text = errorState.SKS ?: "", color = Color.Red)
 
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = matkulEvent.semester,
-            onValueChange = { onValueChange(matkulEvent.copy(semester = it)) },
-            label = { Text("Semester") },
-            isError = errorState.semester != null,
-            placeholder = { Text("Masukkan Kode") }
-        )
+        Text(text = "Semester")
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            semester.forEach { sms ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    RadioButton(
+                        selected = matkulEvent.semester == sms,
+                        onClick = { onValueChange(matkulEvent.copy(semester = sms)) }
+                    )
+                    Text(text = sms)
+                }
+            }
+        }
         Text(text = errorState.semester ?: "", color = Color.Red)
 
         Spacer(modifier = Modifier.height(16.dp))
