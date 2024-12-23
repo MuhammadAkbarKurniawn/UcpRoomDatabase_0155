@@ -48,32 +48,35 @@ fun InsertMKView(
 
     Scaffold(
         modifier = modifier,
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
-        ) {
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = {
             CustomTopBar(
                 onBack = onBack,
                 showBackButton = true,
                 judul = "Tambah MataKuliah"
             )
-            InsertBodyMK(
-                uiState = uiState,
-                dosenList = uiState.dosenList,
-                onValueChange = { updateEvent -> viewModel.updateState(updateEvent) },
-                onClick = {
-                    coroutineScope.launch {
-                        viewModel.saveData()
+        },
+        content = { padding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(16.dp)
+            ) {
+                InsertBodyMK(
+                    uiState = uiState,
+                    dosenList = uiState.dosenList,
+                    onValueChange = { updateEvent -> viewModel.updateState(updateEvent) },
+                    onClick = {
+                        coroutineScope.launch {
+                            viewModel.saveData()
+                        }
+                        onNavigate()
                     }
-                    onNavigate()
-                }
-            )
+                )
+            }
         }
-    }
+    )
 }
 
 @Composable
@@ -85,8 +88,8 @@ fun InsertBodyMK(
     dosenList: List<Dosen>
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         FormMatkul(
@@ -96,9 +99,15 @@ fun InsertBodyMK(
             modifier = Modifier.fillMaxWidth(),
             dosenList = dosenList
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Button(
             onClick = onClick,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF2196F3) // Set the button background to blue
+            )
         ) {
             Text("Simpan")
         }
@@ -117,12 +126,11 @@ fun FormMatkul(
     val jenisMataKuliah = listOf("Wajib", "Peminatan")
     val semester = listOf("Ganjil", "Genap")
 
-
     var chosenDropdown by remember { mutableStateOf(matkulEvent.dosenPengampu) }
     var expanded by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth()
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
