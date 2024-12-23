@@ -20,6 +20,7 @@ import com.example.ucproomdatabase.ui.viewmodel.MataKuliahViewModel
 import com.example.ucproomdatabase.ui.viewmodel.MatkulEvent
 import com.example.ucproomdatabase.ui.viewmodel.MatkulUiState
 import com.example.ucproomdatabase.ui.viewmodel.PenyediaViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 object DestinasiInsertMk : AlamatNavigasi {
@@ -69,9 +70,13 @@ fun InsertMKView(
                     onValueChange = { updateEvent -> viewModel.updateState(updateEvent) },
                     onClick = {
                         coroutineScope.launch {
-                            viewModel.saveData()
+                            if (viewModel.validateFields()) {
+                                viewModel.saveData()
+                                onNavigate()
+                            } else {
+                                snackbarHostState.showSnackbar("Data tidak valid. Periksa input.")
+                            }
                         }
-                        onNavigate()
                     }
                 )
             }
