@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -44,13 +45,13 @@ fun InsertDsnView(
     onBack: () -> Unit,
     onNavigate: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: DosenViewModel = viewModel(factory = PenyediaViewModel.Factory) //inisialisasi viewModel
-){
-    val uiState = viewModel.uiState //Ambiil Uistate dari view model
-    val snackbarHostState = remember {SnackbarHostState()} // Snackbarstate
+    viewModel: DosenViewModel = viewModel(factory = PenyediaViewModel.Factory) // Inisialisasi viewModel
+) {
+    val uiState = viewModel.uiState // Ambil Uistate dari view model
+    val snackbarHostState = remember { SnackbarHostState() } // Snackbar state
     val coroutineScope = rememberCoroutineScope()
 
-    //Observasi perubahan SnackbarMessage
+    // Observasi perubahan SnackbarMessage
     LaunchedEffect(uiState.snackBarMessage) {
         uiState.snackBarMessage?.let { message ->
             coroutineScope.launch {
@@ -60,66 +61,74 @@ fun InsertDsnView(
         }
     }
 
-
-    Scaffold (
+    Scaffold(
         modifier = modifier,
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) } //Tempatkan snackbar diScaffold
-    ){
-            padding ->
-        Column (
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(16.dp)
-        ){
-
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }, // Tempatkan snackbar di Scaffold
+        topBar = {
             CustomTopBar(
                 onBack = onBack,
                 showBackButton = true,
                 judul = "Tambah Daftar Dosen",
             )
-            // isi body
-            InsertBodyDsn(
-                uiState = uiState,
-                onValueChange = { updateEvent ->
-                    viewModel.updateState(updateEvent) // update state diViewModel
-                },
-                onClick = {
-                    coroutineScope.launch {
-                        viewModel.saveData() //simpan data
+        },
+        content = { padding ->
+            // Apply padding and ensure full-screen layout with enough space for content
+            Column(
+                modifier = Modifier
+                    .fillMaxSize() // Fill the entire screen
+                    .padding(padding) // Add padding around the screen
+            ) {
+                InsertBodyDsn(
+                    uiState = uiState,
+                    onValueChange = { updateEvent ->
+                        viewModel.updateState(updateEvent) // Update state in ViewModel
+                    },
+                    onClick = {
+                        coroutineScope.launch {
+                            viewModel.saveData() // Save data
+                        }
+                        onNavigate()
                     }
-                    onNavigate()
-                }
-            )
+                )
+            }
         }
-    }
+    )
 }
-
 @Composable
 fun InsertBodyDsn(
     modifier: Modifier = Modifier,
     onValueChange: (DosenEvent) -> Unit,
     uiState: DosenUiState,
     onClick: () -> Unit
-){
-    Column (
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize() // Ensure the column fills the available space
+            .padding(16.dp), // Add padding to avoid UI elements sticking to the edges
+        verticalArrangement = Arrangement.Top, // Align form at the top
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        FormDosen(dosenEvent = uiState.dosenEvent,
+    ) {
+        FormDosen(
+            dosenEvent = uiState.dosenEvent,
             onValueChange = onValueChange,
             errorState = uiState.isEntryValid,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth() // Ensure form fills the available width
         )
+
+        Spacer(modifier = Modifier.height(16.dp)) // Add space before the button
+
         Button(
             onClick = onClick,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(), // Ensure the button spans the full width
+                    colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF2196F3) // Set background color to blue
+                    )
         ) {
             Text("Simpan")
         }
     }
 }
+
 
 @Composable
 fun FormDosen(
@@ -127,12 +136,13 @@ fun FormDosen(
     onValueChange: (DosenEvent) -> Unit,
     errorState: FormErrorState = FormErrorState(),
     modifier: Modifier = Modifier
-){
+) {
     val jenisKelamin = listOf("Laki-Laki", "Perempuan")
 
-    Column (
-        modifier = Modifier.fillMaxWidth()
-    ){
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = dosenEvent.nama,
@@ -163,14 +173,14 @@ fun FormDosen(
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = "Jenis Kelamin")
-        Row (
+        Row(
             modifier = Modifier.fillMaxWidth()
-        ){
-            jenisKelamin.forEach{ jk ->
-                Row (
+        ) {
+            jenisKelamin.forEach { jk ->
+                Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
-                ){
+                ) {
                     RadioButton(
                         selected = dosenEvent.jenisKelamin == jk,
                         onClick = {
@@ -187,6 +197,5 @@ fun FormDosen(
             text = errorState.jenisKelamin ?: "",
             color = Color.Red
         )
-
     }
 }
