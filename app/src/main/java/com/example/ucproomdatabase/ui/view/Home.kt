@@ -2,21 +2,19 @@ package com.example.ucproomdatabase.ui.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -42,51 +40,63 @@ fun HomeView(
                 Brush.verticalGradient(
                     colors = listOf(
                         Color.White,
-                        Color(0xFFBBDEFB) // Light Blue
+                        Color(0xFF2196F3) // Sharper Blue
                     )
                 )
             )
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header Section
+        // Header Section with Logo and Text
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 60.dp, start = 16.dp, end = 16.dp),
+                .padding(top = 40.dp),
             contentAlignment = Alignment.Center
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.nasa),
+                    contentDescription = "Logo UI",
+                    modifier = Modifier
+                        .size(80.dp)
+                        .padding(bottom = 16.dp)
+                )
                 Text(
-                    text = "Selamat Datang di Sistem \n Universitas Muhammadiyah Yogyakarta",
-                    color = Color(0xFF1976D2), // Dark Blue
-                    fontSize = 28.sp,
+                    text = "Selamat Datang di Sistem\nUniversitas Muhammadiyah Yogyakarta",
+                    color = Color(0xFF0D47A1), // Darker Blue
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
             }
         }
 
-        // Illustration
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.nasa),
-                contentDescription = "Logo UI",
-                modifier = Modifier.size(200.dp)
-            )
-        }
+        // Buttons inside a full Box
+        Spacer(modifier = Modifier.height(32.dp))
 
-        // Buttons
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 48.dp, top = 16.dp),
-            contentAlignment = Alignment.Center
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color(0xFFBBDEFB))
+                .padding(24.dp),
+            contentAlignment = Alignment.TopCenter
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Menu :",
+                    color = Color(0xFF0D47A1),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
                 HoverButton(
                     text = "Dosen",
                     defaultColor = Color(0xFF1976D2),
@@ -127,26 +137,7 @@ fun HoverButton(
         modifier = Modifier
             .fillMaxWidth(0.8f)
             .padding(vertical = 8.dp)
-            .onPointerEnter { isHovered.value = true }
-            .onPointerExit { isHovered.value = false }
     ) {
         Text(text)
     }
 }
-
-// Extensions untuk Klik
-fun Modifier.onPointerEnter(onEnter: () -> Unit): Modifier = this.then(
-    Modifier.pointerInput(Unit) {
-        detectTapGestures(onPress = {
-            onEnter()
-        })
-    }
-)
-
-fun Modifier.onPointerExit(onExit: () -> Unit): Modifier = this.then(
-    Modifier.pointerInput(Unit) {
-        detectTapGestures(onPress = {
-            onExit()
-        })
-    }
-)
