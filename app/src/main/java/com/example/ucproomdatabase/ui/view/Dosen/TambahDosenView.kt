@@ -85,9 +85,13 @@ fun InsertDsnView(
                     },
                     onClick = {
                         coroutineScope.launch {
-                            viewModel.saveData() // Save data
+                            if (viewModel.validateFields()) {
+                                viewModel.saveData()
+                                onNavigate()
+                            } else {
+                                snackbarHostState.showSnackbar("Data tidak valid. Periksa input.")
+                            }
                         }
-                        onNavigate()
                     }
                 )
             }
