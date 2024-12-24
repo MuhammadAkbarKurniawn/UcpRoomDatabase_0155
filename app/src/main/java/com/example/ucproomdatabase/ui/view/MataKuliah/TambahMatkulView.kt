@@ -20,7 +20,6 @@ import com.example.ucproomdatabase.ui.viewmodel.MataKuliahViewModel
 import com.example.ucproomdatabase.ui.viewmodel.MatkulEvent
 import com.example.ucproomdatabase.ui.viewmodel.MatkulUiState
 import com.example.ucproomdatabase.ui.viewmodel.PenyediaViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 object DestinasiInsertMk : AlamatNavigasi {

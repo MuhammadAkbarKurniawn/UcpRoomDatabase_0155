@@ -34,7 +34,7 @@ fun HomeView(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(

@@ -3,7 +3,6 @@ package com.example.ucproomdatabase.ui.view.MataKuliah
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -32,7 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.KeyEventDispatcher.Component
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ucproomdatabase.data.entity.MataKuliah
 import com.example.ucproomdatabase.ui.customwidget.CustomTopBar

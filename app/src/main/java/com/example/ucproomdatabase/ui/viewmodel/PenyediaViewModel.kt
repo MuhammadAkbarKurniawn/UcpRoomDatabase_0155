@@ -1,14 +1,11 @@
 package com.example.ucproomdatabase.ui.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import androidx.room.Update
 import com.example.ucproomdatabase.JadwalApp
-import com.example.ucproomdatabase.ui.view.MataKuliah.DetailMatkulView
 
 object PenyediaViewModel{
     val Factory = viewModelFactory {

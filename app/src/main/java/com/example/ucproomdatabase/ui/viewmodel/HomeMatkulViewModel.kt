@@ -2,9 +2,7 @@ package com.example.ucproomdatabase.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ucproomdatabase.data.entity.Dosen
 import com.example.ucproomdatabase.data.entity.MataKuliah
-import com.example.ucproomdatabase.repository.RepositoryDosen
 import com.example.ucproomdatabase.repository.RepositoryMatkul
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted

@@ -2,7 +2,6 @@ package com.example.ucproomdatabase.repository
 
 import com.example.ucproomdatabase.data.dao.DosenDao
 import com.example.ucproomdatabase.data.entity.Dosen
-import com.example.ucproomdatabase.repository.RepositoryDosen
 import kotlinx.coroutines.flow.Flow
 
 class LocalRepoDosen
